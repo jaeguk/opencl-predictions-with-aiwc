@@ -1,6 +1,6 @@
 # An Ubuntu environment configured for building the phd repo.
-#FROM nvidia/opencl
-FROM ubuntu:18.04
+FROM nvidia/cuda
+#FROM ubuntu:18.04
 
 MAINTAINER Beau Johnston <beau.johnston@anu.edu.au>
 
@@ -72,18 +72,18 @@ RUN make install
 
 # Install R and model dependencies
 RUN apt-get install --no-install-recommends -y dirmngr gpg-agent
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9
 #RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
 #RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E084DAB9
 #RUN add-apt-repository ppa:marutter/rdev
 #RUN apt-get update
 #RUN apt-get -y upgrade
 RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9
 RUN apt-get -y --no-install-recommends update
 RUN apt-get -y --no-install-recommends install r-base-dev r-base-core r-recommended
 RUN apt-get install -t bionic -y libcurl4-openssl-dev 
-RUN apt-get install -t bionic -y libssl-dev
+RUN apt-get install -t bionic -y libssl-dev libxml2-dev r-base-dev
 RUN Rscript -e "install.packages('devtools')"
 RUN Rscript -e "devtools::install_github('imbs-hl/ranger')"
 
@@ -100,26 +100,26 @@ RUN Rscript -e "devtools::install_github('imbs-hl/ranger')"
 #RUN git clone https://github.com/BeauJoh/opencl-predictions-with-aiwc.git $PREDICTIONS
 
 # Install beakerx
-RUN apt-get install --no-install-recommends -y python3-pip python3-setuptools python3-dev libreadline-dev libpcre3-dev libbz2-dev liblzma-dev libicu-dev
+RUN apt-get install --no-install-recommends -y python3-pip python3-setuptools python3-dev libreadline-dev libpcre3-dev libbz2-dev liblzma-dev libicu-dev jupyter
 RUN pip3 install --upgrade pip
 RUN pip3 install --ignore-installed pyzmq
 RUN pip3 install tzlocal rpy2 requests ipywidgets beakerx pandas py4j
 
 # Install R module for beakerx
-RUN Rscript -e "devtools::install_github('IRkernel/IRkernel')"\
-    && Rscript -e "IRkernel::installspec(user = FALSE)"\
-    && Rscript -e "devtools::install_github('cran/RJSONIO')"\
-    && Rscript -e "devtools::install_github('r-lib/httr')"\
-    && Rscript -e "devtools::install_github('tidyverse/magrittr')"\
-    && Rscript -e "devtools::install_github('tidyverse/ggplot2')"\
-    && Rscript -e "devtools::install_github('tidyverse/tidyr')"\
-    && Rscript -e "devtools::install_github('BeauJoh/fmsb')"\
-    && Rscript -e "devtools::install_github('wilkelab/cowplot')"\
-    && Rscript -e "devtools::install_github('cran/gridGraphics')"\
-    && Rscript -e "devtools::install_github('cran/Metrics')"\
-    && Rscript -e "devtools::install_github('cran/latex2exp')"\
-    && Rscript -e "devtools::install_github('cran/akima')" \
-    && Rscript -e "devtools::install_github('cran/pander')"
+RUN Rscript -e "devtools::install_github('IRkernel/IRkernel')"
+Run Rscript -e "IRkernel::installspec(user = FALSE)"
+Run Rscript -e "devtools::install_github('cran/RJSONIO')"
+Run Rscript -e "devtools::install_github('r-lib/httr')"
+Run Rscript -e "devtools::install_github('tidyverse/magrittr')"
+Run Rscript -e "devtools::install_github('tidyverse/ggplot2')"
+Run Rscript -e "devtools::install_github('tidyverse/tidyr')"
+Run Rscript -e "devtools::install_github('BeauJoh/fmsb')"
+Run Rscript -e "devtools::install_github('wilkelab/cowplot')"
+Run Rscript -e "devtools::install_github('cran/gridGraphics')"
+Run Rscript -e "devtools::install_github('cran/Metrics')"
+Run Rscript -e "devtools::install_github('cran/latex2exp')"
+Run Rscript -e "devtools::install_github('cran/akima')"
+Run Rscript -e "devtools::install_github('cran/pander')"
 RUN beakerx install
 
 # Install LetMeKnow
